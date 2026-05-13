@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mon Shop Telegram</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --tg-theme-bg-color: #ffffff;
+            --tg-theme-text-color: #000000;
+            --tg-theme-button-color: #2481cc;
+            --tg-theme-button-text-color: #ffffff;
+            --tg-theme-secondary-bg-color: #efeff3;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--tg-theme-secondary-bg-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .container {
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .product-grid {
+            display: block;
+        }
+
+        .product-card {
+            background: var(--tg-theme-secondary-bg-color);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .video-container {
+            width: 100%;
+            background: #000;
+            line-height: 0;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+
+        .product-price {
+            color: var(--tg-theme-button-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .order-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Modal / Form */
+        #order-form-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-card {
+            background: var(--tg-theme-bg-color);
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .cancel-btn {
+            width: 100%;
+            margin-top: 10px;
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>VITRINE SHOP</header>
+
+<div class="container">
+    <div class="product-grid" id="grid">
+        <!-- Article 1 -->
+        <div class="product-card">
+            <div class="video-container">
+                <!-- Remplacer 'URL_VIDEO' par tes liens MP4 réels -->
+                <video autoplay loop muted playsinline>
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="product-info">
+                <div class="product-title">Article Premium #1</div>
+                <div class="product-price">45.00 €</div>
+                <button class="order-btn" onclick="openForm('Article Premium #1', 45)">Acheter maintenant</button>
+            </div>
+        </div>
+
+        <!-- Article 2 -->
+        <div class="product-card">
+            <div class="video-container">
+                <video autoplay loop muted playsinline>
+                    <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="product-info">
+                <div class="product-title">Article Luxe #2</div>
+                <div class="product-price">80.00 €</div>
+                <button class="order-btn" onclick="openForm('Article Luxe #2', 80)">Acheter maintenant</button>
+            </div>
+        </div>
+
+        <!-- Article 3 -->
+        <div class="product-card">
+            <div class="video-container">
+                <video autoplay loop muted playsinline>
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="product-info">
+                <div class="product-title">Article Basic #3</div>
+                <div class="product-price">25.00 €</div>
+                <button class="order-btn" onclick="openForm('Article Basic #3', 25)">Acheter maintenant</button>
+            </div>
+        </div>
+
+        <!-- Article 4 -->
+        <div class="product-card">
+            <div class="video-container">
+                <video autoplay loop muted playsinline>
+                    <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="product-info">
+                <div class="product-title">Edition Limitée #4</div>
+                <div class="product-price">120.00 €</div>
+                <button class="order-btn" onclick="openForm('Edition Limitée #4', 120)">Acheter maintenant</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Formulaire -->
+<div id="order-form-overlay">
+    <div class="form-card">
+        <h2 id="form-item-name" style="margin-top:0;">Commande</h2>
+        <div class="form-group">
+            <label>Mode de paiement</label>
+            <select id="payment-method">
+                <option value="PCS">Ticket PCS</option>
+                <option value="Espèces">Espèces (Main propre)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Adresse complète / Ville</label>
+            <textarea id="address" rows="3" placeholder="Ex: 15 rue de la Paix, 75000 Paris"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Informations supp. (Optionnel)</label>
+            <input type="text" id="notes" placeholder="Code PCS, étage, tel...">
+        </div>
+        <button class="submit-btn" onclick="sendOrder()">Confirmer la commande</button>
+        <button class="cancel-btn" onclick="closeForm()">Annuler</button>
+    </div>
+</div>
+
+<script>
+    let tg = window.Telegram.WebApp;
+    tg.expand();
+
+    let currentItem = "";
+    let currentPrice = 0;
+
+    function openForm(name, price) {
+        currentItem = name;
+        currentPrice = price;
+        document.getElementById('form-item-name').innerText = name + " - " + price + "€";
+        document.getElementById('order-form-overlay').style.display = 'flex';
+    }
+
+    function closeForm() {
+        document.getElementById('order-form-overlay').style.display = 'none';
+    }
+
+    function sendOrder() {
+        const payMethod = document.getElementById('payment-method').value;
+        const address = document.getElementById('address').value;
+        const notes = document.getElementById('notes').value;
+
+        if (!address) {
+            alert("Veuillez entrer une adresse.");
+            return;
+        }
+
+        const orderData = {
+            item: currentItem,
+            price: currentPrice,
+            payment: payMethod,
+            address: address,
+            notes: notes,
+            user: tg.initDataUnsafe.user ? tg.initDataUnsafe.user.username : "Utilisateur inconnu"
+        };
+
+        // On envoie les données au bot via sendData
+        // Note: sendData ne fonctionne que si l'app est ouverte via un KeyboardButton
+        // Pour un InlineButton, il faudra utiliser un backend ou answerWebAppQuery
+        tg.sendData(JSON.stringify(orderData));
+        tg.close();
+    }
+</script>
+
+</body>
+</html>
